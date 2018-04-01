@@ -33,7 +33,7 @@ qemu启动并且冻结在开始状态
 在另一个终端中进入gdb
 输入命令：
 ~~~
-file vmlinu
+file vmlinux
 break start_kernel
 target remote:1234
 ~~~
