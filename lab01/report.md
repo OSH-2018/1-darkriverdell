@@ -55,22 +55,22 @@ start_kernel在最后调用rest_init函数
 ### init进程与kernel_thread进程的创建
 在rest_init 函数中调用两次kernel_thread产生进程kernel_init及kernel_thread。
 
-![rest_init 函数两次调用kernel_thread](../screenshots/rest_init.png)
+![rest_init 函数两次调用kernel_thread](screenshots/rest_init.png)
 
 kernel_init进程产生之后，系统才有了占有独立资源的进程概念。kernel_init完成各项配置之后，会通过调用do_execve()函数变成用户态进程init. 而init_task最终会演化成idle进程。具体说来，首先调用init_idle_bootup_task将当前进程（也就是init_task）优先级变成idle类。
-![调用init_idle_bootup_task](../screenshots/init_task.png)
+![调用init_idle_bootup_task](screenshots/init_task.png)
 
 再调用schedule()函数调度一下，当前进程就切换到了init进程。
 
-![调用schedule](../screenshots/schedule.png)
+![调用schedule](screenshots/schedule.png)
 
 此后调用do_idle()，init_task进程就彻底变成了功能为循环检查进程队列的idle进程。
 
-![调用init_idle_bootup_task](../screenshots/idle.png)
+![调用init_idle_bootup_task](screenshots/idle.png)
 
 pid = 1 的 init 进程会继续更高阶的初始化，如初始化 driver, 打开 console, 最后根据不同的系统配置， 执行对应的初始化脚本 ，或者是任一个预设的 init 程序，
 
-![调用init_idle_bootup_task](../screenshots/initprocess.png)
+![调用init_idle_bootup_task](screenshots/initprocess.png)
 
 完成整个系统的初始化。其中包括产生shell界面，用于和用户交互。
 
