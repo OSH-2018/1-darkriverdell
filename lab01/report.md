@@ -19,28 +19,28 @@ find . | cpio -o -Hnewc |gzip -9 > ../rootfs.img
 
 
 ### 2.下载并编译内核
-下载的linux内核版本为linux-4.13。解压后使用 make menuconfig 配置内核，将kernel hacking中的compiler设置中将compile the kernel with debug info选中,然后make 编译即可
+下载的linux内核版本为linux-4.13。解压后使用 make menuconfig 命令配置内核，将kernel hacking中的compiler设置中将compile the kernel with debug info选中,然后make 编译即可
 
 make menuconfig 命令需要ncurses库，而且要命令行终端宽度大于80字符，注意不要让终端太小。
 
 ### 3.启动追踪内核
 将rootfs.img移动到内核文件夹，然后安装qemu
 在终端内输入命令:
-
+~~~
 qemu -kernel arch/x86/boot/bzImage -initrd rootfs.img -s -S
-
+~~~
 qemu启动并且冻结在开始状态
 在另一个终端中进入gdb
 输入命令：
-
+~~~
 file vmlinu
 break start_kernel
 target remote:1234
-
+~~~
 此时gdb就连接上了qemu，可以从gdb控制qemu的暂停和继续
 
 ## 重要事件
-说明：我在下面提到的很多函数名只适用于4.13版本
+说明：我在下面提到的很多函数名只适用于Linux内核4.13版本
 ###  init_task的创建
 Init_task是系统的第一个进程，也是所有其他进程的祖先。它是在start_kernel运行之前，在平台相关的代码中被创建的。
 
